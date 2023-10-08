@@ -26,7 +26,7 @@ class Book(Publication):
         self.__autor=autor
 
     def __str__(self):
-        return Book(f'{self.__title} by {self.__autor} from {self.__year}')
+        return Book(f'{self.title} by {self.autor} from {self.year}')
 
 class Library:
     def __init__(self):
@@ -65,17 +65,11 @@ class Library:
             for book in self.books:
                 file.write(f'{book.title},{book.autor},{book.year}\n')
 
-    def load_book(self, file_name: str):
+    def load_book(self,file_name:str):
         with open(file_name, 'r') as file:
             for new_book in file.readlines():
-                values = new_book.strip().split(",")
-                if len(values) == 3:
-                    title, autor, year = values
-                    self.books.append(Bookmodel(title=title, autor=autor, year=int(year)))
-                else:
-                    print(f"Invalid book data: {new_book}")
-        file.close()
-
+                title, autor, year = new_book.strip().split(",")
+                self.books.append(Bookmodel(title=title, autor=autor, year=int(year)))
 
 class Magazine(Bookmodel):
     pass
@@ -97,7 +91,7 @@ print('виведення списку книг бібліотеки по іме
 for book in library.generator_books("A.Frankow"):
     print(book)
 
-library.add_book(Bookmodel(title='Harry Poter 4', autor='J.K.Rowling', year=2000))
+library.add_book(Bookmodel(title='The Catcher in the Rye', autor='J.D. Salinger', year=1951))
 print(library.books)
 
 # #збереження списку книг у файл
@@ -116,5 +110,8 @@ library.load_book('books.txt')
 print("виведення списку книг бібліотеки після додавання")
 for book in library:
     print(book)
+
+
+
 
 
